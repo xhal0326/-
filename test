@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>나와 가장 잘 맞는 일간 찾기</title>
+
+<style>
+body{
+margin:0;
+font-family:'Pretendard',sans-serif;
+background:linear-gradient(180deg,#090b17,#11182d,#1a2240);
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+
+.container{
+width:90%;
+max-width:700px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(10px);
+padding:40px;
+border-radius:20px;
+box-shadow:0 0 30px rgba(145,120,255,.3);
+}
+
+h1{
+text-align:center;
+color:#d9c6ff;
+}
+
+input,select,button{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:10px;
+font-size:16px;
+}
+
+button{
+background:#8f6fff;
+color:white;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{
+opacity:.9;
+}
+
+.result{
+margin-top:30px;
+padding:20px;
+background:rgba(255,255,255,.05);
+border-radius:15px;
+display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>✨ 나와 가장 잘 맞는 일간 찾기 ✨</h1>
+
+<input type="number" id="year" placeholder="출생연도">
+
+<input type="number" id="month" placeholder="출생월">
+
+<input type="number" id="day" placeholder="출생일">
+
+<select id="hour">
+<option value="0">태어난 시각 모름</option>
+<option value="1">00~01시</option>
+<option value="2">02~03시</option>
+<option value="3">04~05시</option>
+<option value="4">06~07시</option>
+<option value="5">08~09시</option>
+<option value="6">10~11시</option>
+<option value="7">12~13시</option>
+<option value="8">14~15시</option>
+<option value="9">16~17시</option>
+<option value="10">18~19시</option>
+<option value="11">20~21시</option>
+<option value="12">22~23시</option>
+</select>
+
+<button onclick="runTest()">결과 보기</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+<script>
+
+const sixtyGanji = [
+"갑자","을축","병인","정묘","무진","기사","경오","신미","임신","계유",
+"갑술","을해","병자","정축","무인","기묘","경진","신사","임오","계미",
+"갑신","을유","병술","정해","무자","기축","경인","신묘","임진","계사",
+"갑오","을미","병신","정유","무술","기해","경자","신축","임인","계묘",
+"갑진","을사","병오","정미","무신","기유","경술","신해","임자","계축",
+"갑인","을묘","병진","정사","무오","기미","경신","신유","임술","계해"
+];
+
+const personality = {
+"갑":"강한 추진력과 리더십을 가진 사람",
+"을":"섬세하고 배려심이 깊은 사람",
+"병":"밝고 열정적인 사람",
+"정":"감성이 풍부하고 따뜻한 사람",
+"무":"신뢰감 있고 책임감이 강한 사람",
+"기":"현실적이고 안정적인 사람",
+"경":"결단력이 뛰어난 사람",
+"신":"세련되고 분석적인 사람",
+"임":"자유롭고 창의적인 사람",
+"계":"직관력과 공감능력이 높은 사람"
+};
+
+const matchMap = {
+"갑":"기토",
+"을":"경금",
+"병":"임수",
+"정":"계수",
+"무":"갑목",
+"기":"을목",
+"경":"병화",
+"신":"정화",
+"임":"무토",
+"계":"기토"
+};
+
+function runTest(){
+
+const y = Number(year.value);
+const m = Number(month.value);
+const d = Number(day.value);
+const h = Number(hour.value);
+
+const index = (y+m+d+h)%60;
+
+const ganji = sixtyGanji[index];
+
+const stem = ganji[0];
+
+const resultDiv = document.getElementById("result");
+
+resultDiv.style.display="block";
+
+resultDiv.innerHTML=`
+<h2>${ganji} 일주</h2>
+
+<p>
+${personality[stem]}
+</p>
+
+<h3>💘 가장 잘 맞는 일간</h3>
+
+<p>
+${matchMap[stem]}
+</p>
+
+<p>
+${stem} 기운을 가진 사람에게 부족한 부분을 보완해주며,
+서로의 장점을 더욱 성장시키는 관계로 해석됩니다.
+</p>
+`;
+}
+
+</script>
+
+</body>
+</html>
